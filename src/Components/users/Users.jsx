@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import UserItem from "./UserItem";
+import {UserItem} from "./UserItem";
 class Users extends Component {
   state = {
     users: [
