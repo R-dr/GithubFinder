@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Navbar } from './Components/layout/Navbar';
 import Users from './Components/users/Users';
 import Search from './Components/users/Search';
-
+import {Alert} from './Components/layout/Alert'
 import axios from 'axios';
 import './App.css';
 
@@ -10,6 +10,7 @@ class App extends Component {
   state = {
     users: [],
     loading: false,
+    alert:null
   };
   // async componentDidMount() {
   //   this.setState({ loading: true });
@@ -31,16 +32,28 @@ class App extends Component {
     console.log(this.state.users);
   };
   //clear users from state
-  clearUsers = ()=>{
-    this.setState({users:[], loading:false})
-  }
+  clearUsers = () => {
+    this.setState({ users: [], loading: false });
+  };
+  //Alert functionality 
+  setAlert = (msg,type) => {
+    this.setState({alert:{msg,type}});
+    // alert disappears after 5 seconds with this
+    setTimeout(()=>this.setState({alert:null}),5000)
+  };
   render() {
-    const {users,loading} = this.state
+    const { users, loading } = this.state;
     return (
       <div className='App'>
         <Navbar />
         <div className='container'>
-          <Search searchUsers={this.searchUsers} clearUsers={this.clearUsers} showClear={ users.length>0 ? true: false}/>
+          <Alert alert={this.state.alert}/>
+          <Search
+            searchUsers={this.searchUsers}
+            clearUsers={this.clearUsers}
+            showClear={users.length > 0 ? true : false}
+            setAlert={this.setAlert}
+          />
           <Users loading={loading} users={users} />
         </div>
       </div>
